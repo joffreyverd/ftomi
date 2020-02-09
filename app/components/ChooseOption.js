@@ -3,10 +3,6 @@ import { StyleSheet } from 'react-native';
 import { Root, Button, Text } from 'native-base';
 
 export default class ChooseOption extends Component {
-  
-  constructor(props) {
-    super(props);
-  }
 
   render() {
 

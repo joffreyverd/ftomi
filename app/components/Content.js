@@ -9,7 +9,9 @@ export default class Content extends Component {
 
     state = {
         linesToDisplay: {},
-        selectedLine: 'lol',
+        selectedLine: null,
+        selectedDirection: null,
+        selectedStop: null,
         buttonTitles: ['Lignes', 'Directions', 'Arrêts']
     };
 
@@ -50,11 +52,13 @@ export default class Content extends Component {
         });
       }
 
-    selectLine(selectedLine) {
-        this.setState({
-            selectedLine
-        });
-        Alert.alert(JSON.stringify(selectedLine));
+    selectLine(newLine) {
+        if (newLine) {
+            this.setState({
+                selectedLine: newLine
+            });
+            Alert.alert(JSON.stringify(newLine));
+        }
     }
 
     render() {
@@ -69,18 +73,24 @@ export default class Content extends Component {
                         getTramLines={this.getTramLines}
                         selectedLine= {selectedLine}/>
                 </Row>
-                <Row style={styles.row}>
-                    <ChooseOption
-                        text={buttonTitles[1]}
-                        getTramLines={this.getTramLines}
-                        selectedLine= {selectedLine}/>
-                </Row>
-                <Row style={styles.row}>
-                    <ChooseOption
-                        text={buttonTitles[2]}
-                        getTramLines={this.getTramLines}
-                        selectedLine= {selectedLine}/>
-                </Row>
+
+                { selectedLine &&
+                    <React.Fragment>
+                        <Row style={styles.row}>
+                            <ChooseOption
+                                text={buttonTitles[1]}
+                                getTramLines={this.getTramLines}
+                                selectedLine= {selectedLine}/>
+                        </Row>
+                        <Row style={styles.row}>
+                            <ChooseOption
+                                text={buttonTitles[2]}
+                                getTramLines={this.getTramLines}
+                                selectedLine= {selectedLine}/>
+                        </Row>
+                    </React.Fragment>
+                }
+
             </Grid>
         );
     }
