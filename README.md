@@ -9,8 +9,7 @@ Mobile application written in React-native which is connected to the CTS api to 
 ## Directory structure
 
 ```
-assets/           containing pictures, fonts and other stuff
-components/       all the components of the application (header, modal, etc)
+app/           containing assets, views and components
 ```
 
 ## Getting started
