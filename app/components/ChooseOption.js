@@ -53,10 +53,9 @@ export default class ChooseOption extends Component {
     });
   }
 
-  selectLine = (selectedLine) => {
-    Alert.alert(JSON.stringify(selectedLine));
+  selectLine(selectedLine) {
     this.setState({ selectedLine });
-   
+    Alert.alert(JSON.stringify(selectedLine));
   }
 
   render() {
