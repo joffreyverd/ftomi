@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, Text } from 'react-native';
 import { Grid, Row, ActionSheet } from 'native-base';
 
 import ChooseOption from './ChooseOption';
@@ -9,13 +9,15 @@ export default class Content extends Component {
 
     state = {
         linesToDisplay: {},
+        directionsToDisplay: {},
+        stopsToDisplay: {},
         selectedLine: null,
         selectedDirection: null,
         selectedStop: null,
         buttonTitles: ['Lignes', 'Directions', 'Arrêts']
     };
 
-    getTramLines = () => {
+    getLines = (typeOf) => {
         api.get('v1/siri/2.0/lines-discovery').then((data) => {
           const lines = data.LinesDelivery.AnnotatedLineRef;
           const myLines = {};
@@ -34,7 +36,7 @@ export default class Content extends Component {
                 linesToDisplay: myLines 
             });
     
-          const { linesToDisplay, buttonTitles } = this.state;
+          const { linesToDisplay } = this.state;
           const names = [];
           for (let i = 0; i < Object.keys(linesToDisplay).length; i++) {
             names[i] = linesToDisplay[i].LineRef + ' - ' + linesToDisplay[i].LineName;
@@ -42,7 +44,7 @@ export default class Content extends Component {
 
           ActionSheet.show({
               options: names,
-              title: buttonTitles[0]
+              title: typeOf
             },
             buttonIndex => {
                 this.selectLine(names[buttonIndex]);
@@ -57,40 +59,47 @@ export default class Content extends Component {
             this.setState({
                 selectedLine: newLine
             });
-            Alert.alert(JSON.stringify(newLine));
         }
+    }
+
+    getDirections = () => {
+        Alert.alert('Directions');
+    }
+
+    getStops = () => {
+        Alert.alert('Arrêts');
     }
 
     render() {
 
-        const { selectedLine, buttonTitles } = this.state;
+        const { selectedLine, selectedDirection, buttonTitles } = this.state;
 
         return (
             <Grid>
                 <Row style={styles.row}>
                     <ChooseOption
-                        text={buttonTitles[0]}
-                        getTramLines={this.getTramLines}
-                        selectedLine= {selectedLine}/>
+                        typeOf={buttonTitles[0]}
+                        getLines={this.getLines}/>
+                    <Text style={styles.text}>{selectedLine ? selectedLine : ''}</Text>
                 </Row>
-
                 { selectedLine &&
-                    <React.Fragment>
-                        <Row style={styles.row}>
-                            <ChooseOption
-                                text={buttonTitles[1]}
-                                getTramLines={this.getTramLines}
-                                selectedLine= {selectedLine}/>
-                        </Row>
-                        <Row style={styles.row}>
-                            <ChooseOption
-                                text={buttonTitles[2]}
-                                getTramLines={this.getTramLines}
-                                selectedLine= {selectedLine}/>
-                        </Row>
-                    </React.Fragment>
-                }
+                    <Row style={styles.row}>
+                        <ChooseOption
+                            typeOf={buttonTitles[1]}
+                            getDirections={this.getDirections}
+                            selectedLine={selectedLine}/>
 
+                    </Row>
+                }
+                { selectedDirection &&
+                    <Row style={styles.row}>
+                        <ChooseOption
+                            typeOf={buttonTitles[2]}  
+                            getStops={this.getStops}  
+                            selectedLine={selectedLine}
+                            selectedDirection={selectedDirection}/>
+                    </Row>
+                }
             </Grid>
         );
     }
@@ -99,10 +108,13 @@ export default class Content extends Component {
 
 const styles = StyleSheet.create({
     row: {
+        height: '18%',
         paddingTop: 30,
-        paddingLeft: 20
+        paddingLeft: 20,
+        display: 'flex',
+        flexDirection: 'column'
     },
-    font: {
+    text: {
         color: '#fff'
     }
 });
