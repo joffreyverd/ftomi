@@ -14,7 +14,7 @@ export default class Content extends Component {
         selectedLine: null,
         selectedDirection: null,
         selectedStop: null,
-        buttonTitles: ['Lignes', 'Directions', 'Arrêts']
+        buttonTitles: ['Lignes', 'Destinations', 'Arrêts']
     };
 
     getLines = (typeOf) => {
@@ -57,16 +57,18 @@ export default class Content extends Component {
     selectLine(newLine) {
         if (newLine) {
             this.setState({
-                selectedLine: newLine
+                selectedLine: newLine,
+                selectedDirection: null,
+                selectedStop: null
             });
         }
     }
 
-    getDirections = () => {
-        Alert.alert('Directions');
+    getDirections = (typeOf) => {
+        Alert.alert('Destinations');
     }
 
-    getStops = () => {
+    getStops = (typeOf) => {
         Alert.alert('Arrêts');
     }
 

@@ -20,7 +20,7 @@ export default class ChooseOption extends Component {
     if (typeOf === 'Lignes') {
       getLines(typeOf);
     }
-    if (typeOf === 'Directions') {
+    if (typeOf === 'Destinations') {
       getDirections(typeOf);
     }
     if (typeOf === 'Arrêts') {
