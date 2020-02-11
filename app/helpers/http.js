@@ -1,5 +1,3 @@
-import base64 from 'react-native-base64'
-
 import storage from './asyncStorageToken';
 
 const API_HOST = 'https://api.cts-strasbourg.eu/';
