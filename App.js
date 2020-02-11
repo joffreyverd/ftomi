@@ -24,12 +24,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (!this.state.isLoaded) {
+    const { isLoaded } = this.state;
+
+    if (!isLoaded) {
       return <AppLoading />;
     }
 
     return (
-      <Main/>
+      <Main />
     );
   }
 }

@@ -11,7 +11,7 @@ module.exports = {
       'comma-dangle': 'off',
       'indent': [
         'error',
-        4,
+        2,
         {
             'SwitchCase': 2
         }
@@ -20,6 +20,7 @@ module.exports = {
         'error',
         'prefer-single'
       ],
+      'global-require': 0
     },
     'globals': {
       'fetch': false
