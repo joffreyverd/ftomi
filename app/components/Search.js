@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Alert, Text } from 'react-native';
 import { Grid, Row, ActionSheet } from 'native-base';
 
-import ChooseOption from './ChooseOption';
+import SearchButton from './SearchButton';
 import api from '../helpers/http';
 
-export default class Content extends Component {
+export default class Search extends Component {
 
     state = {
         linesToDisplay: {},
@@ -79,14 +79,14 @@ export default class Content extends Component {
         return (
             <Grid>
                 <Row style={styles.row}>
-                    <ChooseOption
+                    <SearchButton
                         typeOf={buttonTitles[0]}
                         getLines={this.getLines}/>
                     <Text style={styles.text}>{selectedLine ? selectedLine : ''}</Text>
                 </Row>
                 { selectedLine &&
                     <Row style={styles.row}>
-                        <ChooseOption
+                        <SearchButton
                             typeOf={buttonTitles[1]}
                             getDirections={this.getDirections}
                             selectedLine={selectedLine}/>
@@ -95,7 +95,7 @@ export default class Content extends Component {
                 }
                 { selectedDirection &&
                     <Row style={styles.row}>
-                        <ChooseOption
+                        <SearchButton
                             typeOf={buttonTitles[2]}  
                             getStops={this.getStops}  
                             selectedLine={selectedLine}

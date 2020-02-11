@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Container } from 'native-base';
 
-import Content from '../components/Content';
+import Search from '../components/Search';
 import PersonalHeader from '../components/PersonalHeader';
 
 export default class Main extends Component {
@@ -11,7 +11,7 @@ export default class Main extends Component {
     return (
         <Container style={styles.container}>
             <PersonalHeader/>
-            <Content/>
+            <Search/>
         </Container>
     );
   }

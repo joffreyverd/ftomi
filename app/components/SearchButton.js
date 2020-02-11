@@ -2,19 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import { Root, Button, Text } from 'native-base';
 
-export default class ChooseOption extends Component {
-
-  // get(typeOf) {
-  //   if (getLines && !getDirections && !getStops) {
-  //     () => getLines(typeOf);
-  //   }
-  //   if (getDirections && !getStops) {
-  //     () => getDirections(typeOf);
-  //   }
-  //   if (getStops) {
-  //     () => getStops(typeOf);
-  //   }
-  // }
+export default class SearchButton extends Component {
 
   getData = (typeOf, getLines, getDirections, getStops) => {
     if (typeOf === 'Lignes') {
