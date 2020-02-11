@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Header, Body, Title } from 'native-base';
 
-export default class PersonalHeader extends Component {
-  render() {
-    return (
-      <Header style={styles.header}>
-        <Body>
-          <Title style={styles.headerTitle}>Oh ftomi !</Title>
-        </Body>
-      </Header>
-    );
-  }
-}
+
+export const PersonalHeader = () => (
+  <Header style={styles.header}>
+    <Body>
+      <Title style={styles.headerTitle}>Oh ftomi !</Title>
+    </Body>
+  </Header>
+);
 
 const styles = StyleSheet.create({
   header: {
@@ -24,3 +21,5 @@ const styles = StyleSheet.create({
     marginLeft: 30
   }
 });
+
+export default PersonalHeader;

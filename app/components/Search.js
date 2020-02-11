@@ -6,15 +6,16 @@ import SearchButton from './SearchButton';
 import api from '../helpers/http';
 
 export default class Search extends Component {
-    state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       linesToDisplay: {},
-      directionsToDisplay: {},
-      stopsToDisplay: {},
       selectedLine: null,
       selectedDirection: null,
-      selectedStop: null,
       buttonTitles: ['Lignes', 'Destinations', 'Arrêts']
     };
+  }
+
 
     getLines = (typeOf) => {
       api.get('v1/siri/2.0/lines-discovery').then((data) => {
@@ -37,7 +38,7 @@ export default class Search extends Component {
 
         const { linesToDisplay } = this.state;
         const names = [];
-        for (let i = 0; i < Object.keys(linesToDisplay).length; i++) {
+        for (let i = 0; i < Object.keys(linesToDisplay).length; i += 1) {
           names[i] = `${linesToDisplay[i].LineRef} - ${linesToDisplay[i].LineName}`;
         }
 
@@ -65,15 +66,14 @@ export default class Search extends Component {
       if (newLine) {
         this.setState({
           selectedLine: newLine,
-          selectedDirection: null,
-          selectedStop: null
+          selectedDirection: null
         });
       }
     }
 
     render() {
       const {
-        selectedLine, selectedDirection, selectedStop, buttonTitles
+        selectedLine, selectedDirection, buttonTitles
       } = this.state;
 
       return (

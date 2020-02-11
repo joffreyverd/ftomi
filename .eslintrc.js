@@ -9,6 +9,7 @@ module.exports = {
       'react/jsx-filename-extension': 'off',
       'react/prop-types': 'off',
       'comma-dangle': 'off',
+      'import/no-named-as-default': 0,
       'indent': [
         'error',
         2,
