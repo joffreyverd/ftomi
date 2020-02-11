@@ -8,9 +8,20 @@ module.exports = {
       'no-use-before-define': 'off',
       'react/jsx-filename-extension': 'off',
       'react/prop-types': 'off',
-      'comma-dangle': 'off'
+      'comma-dangle': 'off',
+      'indent': [
+        'error',
+        4,
+        {
+            'SwitchCase': 2
+        }
+      ],
+      'jsx-quotes': [
+        'error',
+        'prefer-single'
+      ],
     },
     'globals': {
-      "fetch": false
+      'fetch': false
     }
   }
