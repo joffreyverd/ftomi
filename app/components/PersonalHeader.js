@@ -3,17 +3,15 @@ import { StyleSheet } from 'react-native';
 import { Header, Body, Title } from 'native-base';
 
 export default class PersonalHeader extends Component {
-
   render() {
     return (
-        <Header style={styles.header}>
-          <Body>
-            <Title style={styles.headerTitle}>Oh ftomi !</Title>
-          </Body>
-        </Header>
+      <Header style={styles.header}>
+        <Body>
+          <Title style={styles.headerTitle}>Oh ftomi !</Title>
+        </Body>
+      </Header>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
