@@ -4,77 +4,92 @@ import { Grid, Row, ActionSheet } from 'native-base';
 
 import SearchButton from './SearchButton';
 import api from '../helpers/http';
+import stopPoints from '../data/stopPoints.json';
+import lines from '../data/lines.json';
 
 export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      linesToDisplay: {},
       selectedLine: null,
-      selectedDirection: null,
-      buttonTitles: ['Lignes', 'Destinations', 'Arrêts']
+      selectedStop: null,
+      buttonTitles: ['Lignes', 'Arrêts', 'Rechercher']
     };
   }
 
-
     getLines = (typeOf) => {
-      api.get('v1/siri/2.0/lines-discovery').then((data) => {
-        const lines = data.LinesDelivery.AnnotatedLineRef;
-        const myLines = {};
-        let index = 0;
-        for (let i = 0; i < lines.length; i += 1) {
-          if (lines[i].Extension.RouteType === 'tram') {
-            myLines[index] = {
-              LineRef: lines[i].LineRef,
-              LineName: lines[i].LineName,
-              RouteColor: lines[i].Extension.RouteColor
-            };
-            index += 1;
-          }
-        }
-        this.setState({
-          linesToDisplay: myLines
-        });
+      const names = [];
+      for (let i = 0; i < Object.keys(lines).length; i += 1) {
+        names[i] = `${lines[i].LineRef} - ${lines[i].LineName}`;
+      }
+      ActionSheet.show({
+        options: names,
+        title: typeOf
+      },
+      (buttonIndex) => {
+        this.loadData(names[buttonIndex], null);
+      });
+    }
 
-        const { linesToDisplay } = this.state;
-        const names = [];
-        for (let i = 0; i < Object.keys(linesToDisplay).length; i += 1) {
-          names[i] = `${linesToDisplay[i].LineRef} - ${linesToDisplay[i].LineName}`;
-        }
+    getStops = (typeOf) => {
+      let stopPointsToDisplay = [];
+      const { selectedLine } = this.state;
+      const lineRef = selectedLine.charAt(0);
 
-        ActionSheet.show({
-          options: names,
-          title: typeOf
-        },
-        (buttonIndex) => {
-          this.selectLine(names[buttonIndex]);
-        });
+      if (lineRef === 'A') {
+        stopPointsToDisplay = stopPoints.A;
+      }
+      if (lineRef === 'B') {
+        stopPointsToDisplay = stopPoints.B;
+      }
+      if (lineRef === 'C') {
+        stopPointsToDisplay = stopPoints.C;
+      }
+      if (lineRef === 'D') {
+        stopPointsToDisplay = stopPoints.D;
+      }
+      if (lineRef === 'E') {
+        stopPointsToDisplay = stopPoints.E;
+      }
+      if (lineRef === 'F') {
+        stopPointsToDisplay = stopPoints.F;
+      }
+
+      ActionSheet.show({
+        options: stopPointsToDisplay,
+        title: typeOf
+      },
+      (buttonIndex) => {
+        this.loadData(null, stopPointsToDisplay[buttonIndex]);
+      });
+    }
+
+    getResult = () => {
+      const { selectedLine, selectedStop } = this.state;
+
+      api.get(`v1/siri/2.0/estimated-timetable?LineRef=${selectedLine.charAt(0)}`).then((data) => {
+        console.log(data.ServiceDelivery.EstimatedTimetableDelivery[0].EstimatedJourneyVersionFrame[0].EstimatedVehicleJourney[0]);
       }).catch(() => {
         Alert.alert('An error occured.');
       });
     }
 
-    getDirections = (typeOf) => {
-      Alert.alert(typeOf);
-    }
-
-    getStops = (typeOf) => {
-      Alert.alert(typeOf);
-    }
-
-    selectLine(newLine) {
+    loadData(newLine, newStop) {
       if (newLine) {
         this.setState({
           selectedLine: newLine,
-          selectedDirection: null
+          selectedStop: null
+        });
+      }
+      if (newStop) {
+        this.setState({
+          selectedStop: newStop
         });
       }
     }
 
     render() {
-      const {
-        selectedLine, selectedDirection, buttonTitles
-      } = this.state;
+      const { selectedLine, selectedStop, buttonTitles } = this.state;
 
       return (
         <Grid>
@@ -89,19 +104,20 @@ export default class Search extends Component {
             <Row style={styles.row}>
               <SearchButton
                 typeOf={buttonTitles[1]}
-                getDirections={this.getDirections}
                 selectedLine={selectedLine}
+                getStops={this.getStops}
               />
-
+              <Text style={styles.text}>{selectedStop || ''}</Text>
             </Row>
           )}
-          { selectedDirection && (
+
+          { selectedLine && selectedStop && (
             <Row style={styles.row}>
               <SearchButton
                 typeOf={buttonTitles[2]}
-                getStops={this.getStops}
                 selectedLine={selectedLine}
-                selectedDirection={selectedDirection}
+                selectedStop={selectedStop}
+                getResult={this.getResult}
               />
             </Row>
           )}

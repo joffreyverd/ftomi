@@ -3,21 +3,21 @@ import { StyleSheet } from 'react-native';
 import { Root, Button, Text } from 'native-base';
 
 export default class SearchButton extends Component {
-  getData = (typeOf, getLines, getDirections, getStops) => {
+  getData = (typeOf, getLines, getStops, getResult) => {
     if (typeOf === 'Lignes') {
       getLines(typeOf);
     }
-    if (typeOf === 'Destinations') {
-      getDirections(typeOf);
-    }
     if (typeOf === 'Arrêts') {
       getStops(typeOf);
+    }
+    if (typeOf === 'Rechercher') {
+      getResult(typeOf);
     }
   }
 
   render() {
     const {
-      typeOf, getLines, getDirections, getStops
+      typeOf, getLines, getStops, getResult
     } = this.props;
 
     return (
@@ -25,7 +25,7 @@ export default class SearchButton extends Component {
         <Button
           block
           style={styles.button}
-          onPress={() => this.getData(typeOf, getLines, getDirections, getStops)}
+          onPress={() => this.getData(typeOf, getLines, getStops, getResult)}
         >
           <Text>{typeOf}</Text>
         </Button>
