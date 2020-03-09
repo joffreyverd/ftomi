@@ -13,6 +13,8 @@ export default class Search extends Component {
     this.state = {
       selectedLine: null,
       selectedStop: null,
+      hip: [],
+      hop: [],
       buttonTitles: ['Lignes', 'Arrêts', 'Rechercher']
     };
   }
@@ -66,12 +68,37 @@ export default class Search extends Component {
 
     getResult = () => {
       const { selectedLine, selectedStop } = this.state;
-
       api.get(`v1/siri/2.0/estimated-timetable?LineRef=${selectedLine.charAt(0)}`).then((data) => {
-        console.log(data.ServiceDelivery.EstimatedTimetableDelivery[0].EstimatedJourneyVersionFrame[0].EstimatedVehicleJourney[0]);
+        const tramFirstDirection = data.ServiceDelivery.EstimatedTimetableDelivery[0]
+          .EstimatedJourneyVersionFrame[0].EstimatedVehicleJourney;
+        const tramSecondDirection = data.ServiceDelivery.EstimatedTimetableDelivery[0]
+          .EstimatedJourneyVersionFrame[1].EstimatedVehicleJourney;
+        this.setState({
+          hip: Search.getTime(tramFirstDirection, selectedStop),
+          hop: Search.getTime(tramSecondDirection, selectedStop)
+        });
       }).catch(() => {
         Alert.alert('An error occured.');
       });
+    }
+
+    static getTime(tramFirstDirection, selectedStop) {
+      const trams = [];
+      const now = new Date();
+      now.setHours(now.getHours() + 1);
+      for (let i = 0; i < Object.keys(tramFirstDirection).length; i += 1) {
+        for (let n = 0; n < Object.keys(tramFirstDirection[i].EstimatedCalls).length; n += 1) {
+          const arrival = new Date(tramFirstDirection[i].EstimatedCalls[n].ExpectedArrivalTime);
+          if (tramFirstDirection[i].EstimatedCalls[n].StopPointName === selectedStop
+            && arrival > now) {
+            trams.push({
+              arrival,
+              direction: tramFirstDirection[i].EstimatedCalls[n].DestinationName
+            });
+          }
+        }
+      }
+      trams.sort((a, b) => a.arrival - b.arrival);
     }
 
     loadData(newLine, newStop) {
