@@ -6,7 +6,7 @@ import { Header, Body, Title } from 'native-base';
 export const PersonalHeader = () => (
   <Header style={styles.header}>
     <Body>
-      <Title style={styles.headerTitle}>Oh ftomi !</Title>
+      <Title style={styles.headerTitle}>Strambourg</Title>
     </Body>
   </Header>
 );
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 25,
     height: 80,
-    backgroundColor: 'rgb(94,92,230)'
+    backgroundColor: 'rgb(105,92,230)'
   },
   headerTitle: {
     marginLeft: 30
