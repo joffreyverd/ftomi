@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Alert, Text, Image, ImageBackground
+  StyleSheet, Alert, Text, ScrollView
 } from 'react-native';
-import { Grid, Row, ActionSheet } from 'native-base';
+import {
+  Row, Button, Icon, Spinner
+} from 'native-base';
 
-import SearchButton from './SearchButton';
 import Result from './Result';
 import api from '../helpers/http';
 import stopPoints from '../data/stopPoints.json';
@@ -40,77 +41,46 @@ export default class Search extends Component {
     super(props);
     this.state = {
       hip: [],
-      hop: [],
-      buttonTitles: ['Lignes', 'Arrêts', 'Rechercher']
+      hop: []
     };
   }
 
-    getLines = (typeOf) => {
-      const names = [];
-      for (let i = 0; i < Object.keys(lines).length; i += 1) {
-        names[i] = {
-          text: `${lines[i].LineRef} - ${lines[i].LineName}`,
-          icon: 'train',
-          iconColor: `#${lines[i].RouteColor}`
-        };
-      }
-      ActionSheet.show({
-        options: names,
-        title: typeOf
-      },
-      (buttonIndex) => {
-        if (!names[buttonIndex]) {
-          return;
-        }
-        this.loadData(names[buttonIndex].text, null);
-        if (!buttonIndex) {
-          return;
-        }
-        this.setState({
-          lineColor: lines[buttonIndex].RouteColor
-        });
-      });
+  getStops(newLine, lineColor) {
+    let stopPointsToDisplay = [];
+    switch (newLine) {
+        case 'A':
+          stopPointsToDisplay = stopPoints.A;
+          break;
+        case 'B':
+          stopPointsToDisplay = stopPoints.B;
+          break;
+        case 'C':
+          stopPointsToDisplay = stopPoints.C;
+          break;
+        case 'D':
+          stopPointsToDisplay = stopPoints.D;
+          break;
+        case 'E':
+          stopPointsToDisplay = stopPoints.E;
+          break;
+        case 'F':
+          stopPointsToDisplay = stopPoints.F;
+          break;
+        default:
+          break;
     }
+    this.setState({
+      selectedLine: newLine,
+      lineColor,
+      stopPointsToDisplay
+    });
+  }
 
-    getStops = (typeOf) => {
-      let stopPointsToDisplay = [];
+    getResult = (selectedStop) => {
+      this.setState({
+        selectedStop
+      });
       const { selectedLine } = this.state;
-      const lineRef = selectedLine.charAt(0);
-
-      switch (lineRef) {
-          case 'A':
-            stopPointsToDisplay = stopPoints.A;
-            break;
-          case 'B':
-            stopPointsToDisplay = stopPoints.B;
-            break;
-          case 'C':
-            stopPointsToDisplay = stopPoints.C;
-            break;
-          case 'D':
-            stopPointsToDisplay = stopPoints.D;
-            break;
-          case 'E':
-            stopPointsToDisplay = stopPoints.E;
-            break;
-          case 'F':
-            stopPointsToDisplay = stopPoints.F;
-            break;
-          default:
-            break;
-      }
-
-      ActionSheet.show({
-        options: stopPointsToDisplay,
-        title: typeOf
-      },
-      (buttonIndex) => {
-        this.loadData(null, stopPointsToDisplay[buttonIndex]);
-      });
-    }
-
-    getResult = () => {
-      const { selectedLine, selectedStop } = this.state;
       api.get(`v1/siri/2.0/estimated-timetable?LineRef=${selectedLine.charAt(0)}`).then((data) => {
         const td = data.ServiceDelivery.EstimatedTimetableDelivery[0].EstimatedJourneyVersionFrame;
         this.setState({
@@ -131,82 +101,65 @@ export default class Search extends Component {
       });
     }
 
-    loadData(newLine, newStop) {
-      if (newLine) {
-        this.setState({
-          selectedLine: newLine,
-          selectedStop: null
-        });
-      }
-      if (newStop) {
-        this.setState({
-          selectedStop: newStop
-        });
-      }
-    }
+    displayLines = () => lines.allLines.map((object) => (
+      <Row style={styles.row} key={object.id}>
+        <Button
+          style={styles.button}
+          onPress={() => this.getStops(object.LineRef, object.RouteColor)}
+        >
+          <Icon name='train' style={{ color: object.RouteColor }} />
+          <Text style={styles.textButton}>{`${object.LineRef} - ${object.LineName}`}</Text>
+        </Button>
+      </Row>
+    ))
+
+    displayStops = (stopPointsToDisplay) => stopPointsToDisplay.map((stop, index) => (
+      <Row style={styles.row} key={index}>
+        <Button
+          style={styles.button}
+          onPress={() => this.getResult(stop)}
+        >
+          <Text style={styles.textButton}>{stop}</Text>
+        </Button>
+      </Row>
+    ))
 
     render() {
       const {
-        selectedLine, selectedStop, buttonTitles, hip, hop, lineColor
+        selectedLine, stopPointsToDisplay, selectedStop, hip, hop, lineColor
       } = this.state;
 
       return (
         <>
-          { hip.length > 0 && hop.length > 0 && (
+          {!selectedLine && !selectedStop && (
+            <ScrollView>
+              {this.displayLines()}
+            </ScrollView>
+          )}
+
+          { selectedLine && !selectedStop && (
+            <>
+              <Text style={styles.selectedLineText}>{`Ligne ${selectedLine}`}</Text>
+              <ScrollView>
+                {this.displayStops(stopPointsToDisplay)}
+              </ScrollView>
+            </>
+          )}
+
+          {selectedLine && selectedStop && hip.length === 0 && hop.length === 0 && (
+            <ScrollView>
+              <Spinner color='rgb(105,92,230)' />
+            </ScrollView>
+
+          )}
+
+          {selectedStop && hip.length > 0 && hop.length > 0 && (
             <Result
               hip={hip}
               hop={hop}
               lineColor={lineColor}
               erasePreviousResult={this.erasePreviousResult}
             />
-          )}
-
-          { hip.length === 0 && hop.length === 0 && (
-            <Grid>
-              <Row style={styles.row}>
-                <ImageBackground
-                  style={styles.ImageBackground}
-                  source={require('../assets/blurred-one.jpg')}
-                >
-                  <SearchButton
-                    typeOf={buttonTitles[0]}
-                    getLines={this.getLines}
-                    style={styles.searchButton}
-                  />
-                  <Text style={styles.text}>{selectedLine || ''}</Text>
-                </ImageBackground>
-              </Row>
-              { selectedLine && (
-                <Row style={styles.row}>
-                  <ImageBackground
-                    style={styles.ImageBackground}
-                    source={require('../assets/blurred-two.jpg')}
-                  >
-                    <SearchButton
-                      typeOf={buttonTitles[1]}
-                      selectedLine={selectedLine}
-                      getStops={this.getStops}
-                    />
-                    <Text style={styles.text}>{selectedStop || ''}</Text>
-                  </ImageBackground>
-                </Row>
-              )}
-              { selectedLine && selectedStop && (
-                <Row style={styles.row}>
-                  <ImageBackground
-                    style={styles.ImageBackground}
-                    source={require('../assets/blurred-three.jpg')}
-                  >
-                    <SearchButton
-                      typeOf={buttonTitles[2]}
-                      selectedLine={selectedLine}
-                      selectedStop={selectedStop}
-                      getResult={this.getResult}
-                    />
-                  </ImageBackground>
-                </Row>
-              )}
-            </Grid>
           )}
         </>
       );
@@ -215,19 +168,26 @@ export default class Search extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    margin: 10,
-    height: '30%',
-    display: 'flex',
-    flexDirection: 'column',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    paddingBottom: 10
   },
-  ImageBackground: {
+  button: {
+    backgroundColor: '#fff',
+    width: '95%',
+    height: 70,
+    marginTop: 15,
+    borderRadius: 15
+  },
+  textButton: {
     width: '100%',
-    height: '100%'
+    color: '#2c2c2e',
+    paddingLeft: 10,
+    fontSize: 13,
+    fontWeight: 'bold'
   },
-  searchButton: {
-
-  },
-  text: {
-    color: '#fff'
+  selectedLineText: {
+    margin: 15,
+    fontWeight: 'bold'
   }
 });

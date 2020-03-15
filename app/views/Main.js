@@ -16,7 +16,7 @@ export const Main = () => (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#2c2c2e'
+    backgroundColor: 'rgb(244, 244, 244)'
   }
 });
 

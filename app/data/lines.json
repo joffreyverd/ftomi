@@ -1,32 +1,40 @@
 {
-    "0": {
-        "LineName": "Parc des Sports - Illkirch Graffenstaden",
-        "LineRef": "A",
-        "RouteColor": "E2001A"
-    },
-    "1": {
-        "LineName": "Lingolsheim Tiergaertel - Hoenheim Gare",
-        "LineRef": "B",
-        "RouteColor": "009EE0"
-    },
-    "2": {
-        "LineName": "Gare Centrale - Neuhof Rodolphe Reuss",
-        "LineRef": "C",
-        "RouteColor": "F29400"
-    },
-    "3": {
-        "LineName": "Poteries - Port du Rhin / Kehl Rathaus",
-        "LineRef": "D",
-        "RouteColor": "009932"
-    },
-    "4": {
-        "LineName": "Campus d'Illkirch - Robertsau L'Escale",
-        "LineRef": "E",
-        "RouteColor": "9085BA"
-    },
-    "5": {
-        "LineName": "Elsau - Place d'Islande",
-        "LineRef": "F",
-        "RouteColor": "B1C800"
-    }
+    "allLines": [
+        {
+            "LineName": "Parc des Sports - Illkirch Graffenstaden",
+            "LineRef": "A",
+            "RouteColor": "#E2001A",
+            "id": 0
+        },
+        {
+            "LineName": "Lingolsheim Tiergaertel - Hoenheim Gare",
+            "LineRef": "B",
+            "RouteColor": "#009EE0",
+            "id": 1
+        },
+        {
+            "LineName": "Gare Centrale - Neuhof Rodolphe Reuss",
+            "LineRef": "C",
+            "RouteColor": "#F29400",
+            "id": 2
+        },
+        {
+            "LineName": "Poteries - Port du Rhin / Kehl Rathaus",
+            "LineRef": "D",
+            "RouteColor": "#009932",
+            "id": 3
+        },
+        {
+            "LineName": "Campus d'Illkirch - Robertsau L'Escale",
+            "LineRef": "E",
+            "RouteColor": "#9085BA",
+            "id": 4
+        },
+        {
+            "LineName": "Elsau - Place d'Islande",
+            "LineRef": "F",
+            "RouteColor": "#B1C800",
+            "id": 5
+        }
+    ]
 }

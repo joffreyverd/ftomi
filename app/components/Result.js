@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import {
-  Grid, Content, Button, ListItem, Text, Icon, Left, Body, Right
+  Button, Text, Icon, Row
 } from 'native-base';
 
 export default class Result extends Component {
-    getTramList = (hip, lineColor) => hip.map((object) => (
+    getTramList = (trams, lineColor) => trams.map((object) => (
       <React.Fragment key={object.id}>
-        <ListItem icon>
-          <Left>
-            <Button style={{ backgroundColor: `#${lineColor}` }}>
-              <Icon active name='train' />
-            </Button>
-          </Left>
-          <Body>
-            <Text style={styles.individualDirection}>{object.direction}</Text>
-          </Body>
-          <Right>
-            <Text>{object.arrival.toISOString().substr(11, 5)}</Text>
-          </Right>
-        </ListItem>
+        <Row style={styles.row} key={object.id}>
+          <Button style={styles.button}>
+            <Icon active name='train' style={{ color: lineColor }} />
+            <Text style={styles.textButton}>
+              {`${object.direction} - ${object.arrival.toISOString().substr(11, 5)}`}
+            </Text>
+          </Button>
+        </Row>
       </React.Fragment>
     ))
 
@@ -30,50 +25,56 @@ export default class Result extends Component {
 
       return (
         <>
-          <Grid style={styles.grid}>
-            <Content>
-              <ListItem itemDivider style={styles.itemDivider}>
-                <Text style={styles.itemDividerText}>{hip[0].direction}</Text>
-              </ListItem>
-              {this.getTramList(hip, lineColor)}
-              <ListItem itemDivider style={styles.itemDivider}>
-                <Text style={styles.itemDividerText}>{hop[0].direction}</Text>
-              </ListItem>
-              {this.getTramList(hop, lineColor)}
-            </Content>
-          </Grid>
+          <ScrollView>
+            <Text style={styles.categorieText}>{hip[0].direction}</Text>
+            {this.getTramList(hip, lineColor)}
+            <Text style={styles.categorieText}>{hop[0].direction}</Text>
+            {this.getTramList(hop, lineColor)}
+          </ScrollView>
 
-          <Grid style={(styles.grid, styles.button)}>
-            <Button
-              light
-              onPress={erasePreviousResult}
-            >
-              <Icon name='arrow-back' />
-              <Text>Nouvelle Recherche</Text>
-            </Button>
-          </Grid>
+          <Button
+            warning
+            onPress={erasePreviousResult}
+            style={styles.comeBackButton}
+          >
+            <Icon name='arrow-back' />
+            <Text>Nouvelle Recherche</Text>
+          </Button>
         </>
       );
     }
 }
 
 const styles = StyleSheet.create({
-  grid: {
-    minHeight: 400
-  },
-  itemDivider: {
-    backgroundColor: '#2c2c2e'
-  },
-  itemDividerText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold'
+  row: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    paddingBottom: 10
   },
   button: {
-    marginLeft: 20
+    backgroundColor: '#fff',
+    width: '95%',
+    height: 70,
+    marginTop: 15,
+    borderRadius: 15
   },
-  individualDirection: {
-    color: '#fff',
-    fontSize: 15
+  textButton: {
+    width: '100%',
+    color: '#2c2c2e',
+    paddingLeft: 10,
+    fontSize: 13,
+    fontWeight: 'bold'
+  },
+  categorieText: {
+    marginLeft: 15,
+    marginTop: 15,
+    fontWeight: 'bold'
+  },
+  comeBackButton: {
+    width: 230,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginBottom: 10,
+    marginTop: 10
   }
 });
