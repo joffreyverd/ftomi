@@ -4,11 +4,13 @@ import { Container } from 'native-base';
 
 import Search from '../components/Search';
 import PersonalHeader from '../components/PersonalHeader';
+import PersonalFooter from '../components/PersonalFooter';
 
 export const Main = () => (
   <Container style={styles.container}>
     <PersonalHeader />
     <Search />
+    <PersonalFooter />
   </Container>
 );
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Header, Body, Title } from 'native-base';
-
+import { Header, Body, Icon } from 'native-base';
 
 export const PersonalHeader = () => (
   <Header style={styles.header}>
     <Body>
-      <Title style={styles.headerTitle}>Strambourg</Title>
+      <Icon name='train' style={styles.headerTitle} />
     </Body>
   </Header>
 );
@@ -18,7 +17,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(105,92,230)'
   },
   headerTitle: {
-    marginLeft: 30
+    width: 25,
+    height: 25,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    color: '#fff'
   }
 });
 

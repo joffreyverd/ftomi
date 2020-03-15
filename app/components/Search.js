@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert, Text } from 'react-native';
+import {
+  StyleSheet, Alert, Text, Image, ImageBackground
+} from 'react-native';
 import { Grid, Row, ActionSheet } from 'native-base';
 
 import SearchButton from './SearchButton';
@@ -46,19 +48,27 @@ export default class Search extends Component {
     getLines = (typeOf) => {
       const names = [];
       for (let i = 0; i < Object.keys(lines).length; i += 1) {
-        names[i] = `${lines[i].LineRef} - ${lines[i].LineName}`;
+        names[i] = {
+          text: `${lines[i].LineRef} - ${lines[i].LineName}`,
+          icon: 'train',
+          iconColor: `#${lines[i].RouteColor}`
+        };
       }
       ActionSheet.show({
         options: names,
         title: typeOf
       },
       (buttonIndex) => {
-        this.loadData(names[buttonIndex], null);
-        if (buttonIndex) {
-          this.setState({
-            lineColor: lines[buttonIndex].RouteColor
-          });
+        if (!names[buttonIndex]) {
+          return;
         }
+        this.loadData(names[buttonIndex].text, null);
+        if (!buttonIndex) {
+          return;
+        }
+        this.setState({
+          lineColor: lines[buttonIndex].RouteColor
+        });
       });
     }
 
@@ -154,30 +164,46 @@ export default class Search extends Component {
           { hip.length === 0 && hop.length === 0 && (
             <Grid>
               <Row style={styles.row}>
-                <SearchButton
-                  typeOf={buttonTitles[0]}
-                  getLines={this.getLines}
-                />
-                <Text style={styles.text}>{selectedLine || ''}</Text>
+                <ImageBackground
+                  style={styles.ImageBackground}
+                  source={require('../assets/blurred-one.jpg')}
+                >
+                  <SearchButton
+                    typeOf={buttonTitles[0]}
+                    getLines={this.getLines}
+                    style={styles.searchButton}
+                  />
+                  <Text style={styles.text}>{selectedLine || ''}</Text>
+                </ImageBackground>
               </Row>
               { selectedLine && (
                 <Row style={styles.row}>
-                  <SearchButton
-                    typeOf={buttonTitles[1]}
-                    selectedLine={selectedLine}
-                    getStops={this.getStops}
-                  />
-                  <Text style={styles.text}>{selectedStop || ''}</Text>
+                  <ImageBackground
+                    style={styles.ImageBackground}
+                    source={require('../assets/blurred-two.jpg')}
+                  >
+                    <SearchButton
+                      typeOf={buttonTitles[1]}
+                      selectedLine={selectedLine}
+                      getStops={this.getStops}
+                    />
+                    <Text style={styles.text}>{selectedStop || ''}</Text>
+                  </ImageBackground>
                 </Row>
               )}
               { selectedLine && selectedStop && (
                 <Row style={styles.row}>
-                  <SearchButton
-                    typeOf={buttonTitles[2]}
-                    selectedLine={selectedLine}
-                    selectedStop={selectedStop}
-                    getResult={this.getResult}
-                  />
+                  <ImageBackground
+                    style={styles.ImageBackground}
+                    source={require('../assets/blurred-three.jpg')}
+                  >
+                    <SearchButton
+                      typeOf={buttonTitles[2]}
+                      selectedLine={selectedLine}
+                      selectedStop={selectedStop}
+                      getResult={this.getResult}
+                    />
+                  </ImageBackground>
                 </Row>
               )}
             </Grid>
@@ -189,11 +215,17 @@ export default class Search extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    height: '18%',
-    paddingTop: 30,
-    paddingLeft: 20,
+    margin: 10,
+    height: '30%',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+  },
+  ImageBackground: {
+    width: '100%',
+    height: '100%'
+  },
+  searchButton: {
+
   },
   text: {
     color: '#fff'

@@ -59,7 +59,7 @@ export default class Result extends Component {
 
 const styles = StyleSheet.create({
   grid: {
-    minHeight: 550
+    minHeight: 400
   },
   itemDivider: {
     backgroundColor: '#2c2c2e'

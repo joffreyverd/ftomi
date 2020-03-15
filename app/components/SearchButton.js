@@ -27,7 +27,7 @@ export default class SearchButton extends Component {
           style={styles.button}
           onPress={() => this.getData(typeOf, getLines, getStops, getResult)}
         >
-          <Text>{typeOf}</Text>
+          <Text style={styles.text}>{typeOf}</Text>
         </Button>
       </Root>
     );
@@ -37,6 +37,14 @@ export default class SearchButton extends Component {
 const styles = StyleSheet.create({
   button: {
     width: 150,
-    backgroundColor: 'rgb(94,60,230)'
+    height: 50,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  },
+  text: {
+    color: '#fff',
+    fontWeight: 'bold'
   }
 });
