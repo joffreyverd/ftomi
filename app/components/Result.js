@@ -4,6 +4,8 @@ import {
   Button, Text, Icon, Row
 } from 'native-base';
 
+import ComeBack from './ComeBack';
+
 export default class Result extends Component {
     getTramList = (trams, lineColor) => trams.map((object) => (
       <React.Fragment key={object.id}>
@@ -20,11 +22,12 @@ export default class Result extends Component {
 
     render() {
       const {
-        hip, hop, lineColor, erasePreviousResult
+        hip, hop, lineColor, erasePreviousResult, selectedLine, selectedStop
       } = this.props;
 
       return (
         <>
+          <Text style={styles.skeleton}>{`Ligne ${selectedLine} > ${selectedStop}`}</Text>
           <ScrollView>
             <Text style={styles.categorieText}>{hip[0].direction}</Text>
             {this.getTramList(hip, lineColor)}
@@ -32,14 +35,7 @@ export default class Result extends Component {
             {this.getTramList(hop, lineColor)}
           </ScrollView>
 
-          <Button
-            warning
-            onPress={erasePreviousResult}
-            style={styles.comeBackButton}
-          >
-            <Icon name='arrow-back' />
-            <Text>Nouvelle Recherche</Text>
-          </Button>
+          <ComeBack erasePreviousResult={erasePreviousResult} />
         </>
       );
     }
@@ -70,11 +66,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontWeight: 'bold'
   },
-  comeBackButton: {
-    width: 230,
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    marginBottom: 10,
-    marginTop: 10
+  skeleton: {
+    margin: 15,
+    fontWeight: 'bold'
   }
 });

@@ -7,6 +7,7 @@ import {
 } from 'native-base';
 
 import Result from './Result';
+import ComeBack from './ComeBack';
 import api from '../helpers/http';
 import stopPoints from '../data/stopPoints.json';
 import lines from '../data/lines.json';
@@ -139,10 +140,11 @@ export default class Search extends Component {
 
           { selectedLine && !selectedStop && (
             <>
-              <Text style={styles.selectedLineText}>{`Ligne ${selectedLine}`}</Text>
+              <Text style={styles.skeleton}>{`Ligne ${selectedLine}`}</Text>
               <ScrollView>
                 {this.displayStops(stopPointsToDisplay)}
               </ScrollView>
+              <ComeBack erasePreviousResult={this.erasePreviousResult} />
             </>
           )}
 
@@ -150,7 +152,6 @@ export default class Search extends Component {
             <ScrollView>
               <Spinner color='rgb(105,92,230)' />
             </ScrollView>
-
           )}
 
           {selectedStop && hip.length > 0 && hop.length > 0 && (
@@ -158,6 +159,8 @@ export default class Search extends Component {
               hip={hip}
               hop={hop}
               lineColor={lineColor}
+              selectedLine={selectedLine}
+              selectedStop={selectedStop}
               erasePreviousResult={this.erasePreviousResult}
             />
           )}
@@ -186,7 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold'
   },
-  selectedLineText: {
+  skeleton: {
     margin: 15,
     fontWeight: 'bold'
   }
