@@ -5,6 +5,7 @@ import {
 } from 'native-base';
 
 import ComeBack from './ComeBack';
+import BreadCrumb from './BreadCrumb';
 
 export default class Result extends Component {
     getTramList = (trams, lineColor) => trams.map((object) => (
@@ -12,7 +13,7 @@ export default class Result extends Component {
         <Row style={styles.row} key={object.id}>
           <Button style={styles.button}>
             <Icon active name='train' style={{ color: lineColor }} />
-            <Text style={styles.textButton}>
+            <Text uppercase={false} style={styles.textButton}>
               {`${object.direction} - ${object.arrival.toISOString().substr(11, 5)}`}
             </Text>
           </Button>
@@ -27,11 +28,11 @@ export default class Result extends Component {
 
       return (
         <>
-          <Text style={styles.process}>{`Ligne ${selectedLine} > ${selectedStop}`}</Text>
+          <BreadCrumb message={`Ligne ${selectedLine} - ${selectedStop}`} />
           <ScrollView>
-            <Text style={styles.categorieText}>{hip[0].direction}</Text>
+            <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
             {this.getTramList(hip, lineColor)}
-            <Text style={styles.categorieText}>{hop[0].direction}</Text>
+            <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
             {this.getTramList(hop, lineColor)}
           </ScrollView>
 
@@ -64,10 +65,12 @@ const styles = StyleSheet.create({
   categorieText: {
     marginLeft: 15,
     marginTop: 15,
-    fontWeight: 'bold'
+    fontSize: 13
   },
   process: {
-    margin: 15,
-    fontWeight: 'bold'
+    padding: 15,
+    fontWeight: 'bold',
+    fontSize: 15,
+    backgroundColor: '#fff'
   }
 });

@@ -8,6 +8,7 @@ import {
 
 import Result from './Result';
 import ComeBack from './ComeBack';
+import BreadCrumb from './BreadCrumb';
 import api from '../helpers/http';
 import stopPoints from '../data/stopPoints.json';
 import lines from '../data/lines.json';
@@ -133,14 +134,16 @@ export default class Search extends Component {
       return (
         <>
           {!selectedLine && !selectedStop && (
-            <ScrollView>
-              {this.displayLines()}
-            </ScrollView>
+            <>
+              <ScrollView>
+                {this.displayLines()}
+              </ScrollView>
+            </>
           )}
 
           { selectedLine && !selectedStop && (
             <>
-              <Text style={styles.process}>{`Ligne ${selectedLine}`}</Text>
+              <BreadCrumb message={`Ligne ${selectedLine}`} />
               <ScrollView>
                 {this.displayStops(stopPointsToDisplay)}
               </ScrollView>
@@ -187,10 +190,6 @@ const styles = StyleSheet.create({
     color: '#2c2c2e',
     paddingLeft: 10,
     fontSize: 13,
-    fontWeight: 'bold'
-  },
-  process: {
-    margin: 15,
     fontWeight: 'bold'
   }
 });

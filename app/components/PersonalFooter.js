@@ -9,11 +9,11 @@ export const PersonalFooter = () => (
     <FooterTab style={styles.footer}>
       <Button active style={styles.button}>
         <Icon name='search' />
-        <Text>Recherche</Text>
+        <Text uppercase={false}>Recherche</Text>
       </Button>
       <Button>
         <Icon name='pin' />
-        <Text>Localisation</Text>
+        <Text uppercase={false}>Localisation</Text>
       </Button>
     </FooterTab>
   </Footer>

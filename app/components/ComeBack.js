@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Icon } from 'native-base';
+import { Button, Text } from 'native-base';
 
 export const ComeBack = (props) => {
   const { erasePreviousResult } = props;
   return (
     <>
       <Button style={styles.floatingComeBack} onPress={erasePreviousResult}>
-        <Icon name='arrow-back' style={styles.arrowIcon} />
+        <Text uppercase={false} style={styles.text}>Nouveau</Text>
       </Button>
     </>
   );
@@ -15,16 +15,16 @@ export const ComeBack = (props) => {
 
 const styles = StyleSheet.create({
   floatingComeBack: {
-    width: 80,
-    height: 60,
+    width: 140,
+    height: 55,
     borderRadius: 15,
-    backgroundColor: '#ee6e73',
+    backgroundColor: 'rgb(105,92,230)',
     position: 'absolute',
     bottom: 65,
     right: 9,
   },
-  arrowIcon: {
-    color: 'red',
+  text: {
+    color: '#fff',
     marginRight: 'auto',
     marginLeft: 'auto'
   }
