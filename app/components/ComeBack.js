@@ -7,7 +7,7 @@ export const ComeBack = (props) => {
   return (
     <>
       <Button style={styles.floatingComeBack} onPress={erasePreviousResult}>
-        <Text uppercase={false} style={styles.text}>Nouveau</Text>
+        <Text uppercase={false} style={styles.text}>Accueil</Text>
       </Button>
     </>
   );

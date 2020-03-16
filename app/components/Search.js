@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Alert, Text, ScrollView
+  StyleSheet, Text, ScrollView, Alert
 } from 'react-native';
 import {
   Row, Button, Icon, Spinner
@@ -9,6 +9,7 @@ import {
 import Result from './Result';
 import ComeBack from './ComeBack';
 import BreadCrumb from './BreadCrumb';
+import SearchBar from './SearchBar';
 import api from '../helpers/http';
 import stopPoints from '../data/stopPoints.json';
 import lines from '../data/lines.json';
@@ -22,7 +23,7 @@ export default class Search extends Component {
       for (let n = 0; n < Object.keys(tramFirstDirection[i].EstimatedCalls).length; n += 1) {
         const arrival = new Date(tramFirstDirection[i].EstimatedCalls[n].ExpectedArrivalTime);
         if (tramFirstDirection[i].EstimatedCalls[n].StopPointName === selectedStop
-          && arrival > now) {
+           && arrival > now) {
           trams.push({
             id: `${i}-${n}`,
             arrival,
@@ -36,6 +37,9 @@ export default class Search extends Component {
       }
     }
     trams.sort((a, b) => a.arrival - b.arrival);
+    if (trams.length === 0) {
+      throw new Error('Aucun tram ne correspond à votre recherche.');
+    }
     return trams;
   }
 
@@ -89,8 +93,9 @@ export default class Search extends Component {
           hip: Search.formatData(td[0].EstimatedVehicleJourney, selectedStop),
           hop: Search.formatData(td[1].EstimatedVehicleJourney, selectedStop)
         });
-      }).catch(() => {
-        Alert.alert('Aucun tram disponible.');
+      }).catch((e) => {
+        this.erasePreviousResult();
+        Alert.alert(e.message);
       });
     }
 
@@ -144,6 +149,7 @@ export default class Search extends Component {
           { selectedLine && !selectedStop && (
             <>
               <BreadCrumb message={`Ligne ${selectedLine}`} />
+              <SearchBar />
               <ScrollView>
                 {this.displayStops(stopPointsToDisplay)}
               </ScrollView>
@@ -153,6 +159,7 @@ export default class Search extends Component {
 
           {selectedLine && selectedStop && hip.length === 0 && hop.length === 0 && (
             <ScrollView>
+              <BreadCrumb message={`Ligne ${selectedLine} - ${selectedStop}`} />
               <Spinner color='rgb(105,92,230)' />
             </ScrollView>
           )}
