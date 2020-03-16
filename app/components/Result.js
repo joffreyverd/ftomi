@@ -27,7 +27,7 @@ export default class Result extends Component {
 
       return (
         <>
-          <Text style={styles.skeleton}>{`Ligne ${selectedLine} > ${selectedStop}`}</Text>
+          <Text style={styles.process}>{`Ligne ${selectedLine} > ${selectedStop}`}</Text>
           <ScrollView>
             <Text style={styles.categorieText}>{hip[0].direction}</Text>
             {this.getTramList(hip, lineColor)}
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontWeight: 'bold'
   },
-  skeleton: {
+  process: {
     margin: 15,
     fontWeight: 'bold'
   }

@@ -140,7 +140,7 @@ export default class Search extends Component {
 
           { selectedLine && !selectedStop && (
             <>
-              <Text style={styles.skeleton}>{`Ligne ${selectedLine}`}</Text>
+              <Text style={styles.process}>{`Ligne ${selectedLine}`}</Text>
               <ScrollView>
                 {this.displayStops(stopPointsToDisplay)}
               </ScrollView>
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold'
   },
-  skeleton: {
+  process: {
     margin: 15,
     fontWeight: 'bold'
   }
