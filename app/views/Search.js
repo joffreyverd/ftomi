@@ -7,9 +7,9 @@ import {
 } from 'native-base';
 
 import Result from './Result';
-import ComeBack from './ComeBack';
-import BreadCrumb from './BreadCrumb';
-import SearchBar from './SearchBar';
+import ComeBack from '../components/ComeBack';
+import BreadCrumb from '../components/BreadCrumb';
+import SearchBar from '../components/SearchBar';
 import api from '../helpers/http';
 import stopPoints from '../data/stopPoints.json';
 import lines from '../data/lines.json';

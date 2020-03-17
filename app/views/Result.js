@@ -4,8 +4,8 @@ import {
   Button, Text, Icon, Row
 } from 'native-base';
 
-import ComeBack from './ComeBack';
-import BreadCrumb from './BreadCrumb';
+import ComeBack from '../components/ComeBack';
+import BreadCrumb from '../components/BreadCrumb';
 
 export default class Result extends Component {
     getTramList = (trams, lineColor) => trams.map((object) => (
