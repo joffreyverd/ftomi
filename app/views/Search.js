@@ -108,6 +108,26 @@ export default class Search extends Component {
       });
     }
 
+    searchStopPoint = (newValue) => {
+      const { stopPointsToDisplay, selectedLine, lineColor } = this.state;
+      const searchedStops = [];
+
+      if (!newValue) {
+        this.getStops(selectedLine, lineColor);
+        return;
+      }
+
+      for (let i = 0; i < Object.keys(stopPointsToDisplay).length; i += 1) {
+        if (stopPointsToDisplay[i].includes(newValue)) {
+          searchedStops.push(stopPointsToDisplay[i]);
+        }
+      }
+
+      this.setState({
+        stopPointsToDisplay: searchedStops,
+      });
+    }
+
     displayLines = () => lines.allLines.map((object) => (
       <Row style={styles.row} key={object.id}>
         <Button
@@ -149,7 +169,9 @@ export default class Search extends Component {
           { selectedLine && !selectedStop && (
             <>
               <BreadCrumb message={`Ligne ${selectedLine}`} />
-              <SearchBar />
+              <SearchBar
+                searchStopPoint={this.searchStopPoint}
+              />
               <ScrollView>
                 {this.displayStops(stopPointsToDisplay)}
               </ScrollView>
