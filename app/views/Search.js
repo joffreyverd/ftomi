@@ -118,7 +118,7 @@ export default class Search extends Component {
       }
 
       for (let i = 0; i < Object.keys(stopPointsToDisplay).length; i += 1) {
-        if (stopPointsToDisplay[i].includes(newValue)) {
+        if (stopPointsToDisplay[i].toLowerCase().includes(newValue.toLowerCase())) {
           searchedStops.push(stopPointsToDisplay[i]);
         }
       }

@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import {
-  Button, Text, Icon, Row
-} from 'native-base';
+import { Text } from 'native-base';
 
 import ComeBack from '../components/ComeBack';
 import BreadCrumb from '../components/BreadCrumb';
+import SingleResult from '../components/SingleResult';
 
 export default class Result extends Component {
     getTramList = (trams, lineColor) => trams.map((object) => (
-      <React.Fragment key={object.id}>
-        <Row style={styles.row} key={object.id}>
-          <Button style={styles.button}>
-            <Icon active name='train' style={{ color: lineColor }} />
-            <Text uppercase={false} style={styles.textButton}>
-              {`${object.direction} - ${object.arrival.toISOString().substr(11, 5)}`}
-            </Text>
-          </Button>
-        </Row>
-      </React.Fragment>
+      <SingleResult
+        key={object.id}
+        lineColor={lineColor}
+        direction={object.direction}
+        arrival={object.arrival}
+      />
     ))
 
     render() {
@@ -43,34 +38,9 @@ export default class Result extends Component {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    paddingBottom: 10
-  },
-  button: {
-    backgroundColor: '#fff',
-    width: '95%',
-    height: 70,
-    marginTop: 15,
-    borderRadius: 15
-  },
-  textButton: {
-    width: '100%',
-    color: '#2c2c2e',
-    paddingLeft: 10,
-    fontSize: 13,
-    fontWeight: 'bold'
-  },
   categorieText: {
     marginLeft: 15,
     marginTop: 15,
-    fontSize: 13
-  },
-  process: {
-    padding: 15,
-    fontWeight: 'bold',
-    fontSize: 15,
-    backgroundColor: '#fff'
+    fontSize: 14
   }
 });
