@@ -136,8 +136,9 @@ export default class Search extends Component {
       </Row>
     ))
 
-    displayStops = (stopPointsToDisplay) => stopPointsToDisplay.map((stop, index) => (
-      <Row style={styles.row} key={index}>
+    displayStops = (stopPointsToDisplay) => stopPointsToDisplay.map((stop, i) => (
+      // String(i) is used to avoid eslint warning `Do not use Array index in keys`
+      <Row style={styles.row} key={String(i)}>
         <PressableItem
           stop={stop}
           getResult={this.getResult}
