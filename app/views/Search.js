@@ -86,6 +86,9 @@ export default class Search extends Component {
       const { selectedLine } = this.state;
       api.get(`v1/siri/2.0/estimated-timetable?LineRef=${selectedLine.charAt(0)}`).then((data) => {
         const td = data.ServiceDelivery.EstimatedTimetableDelivery[0].EstimatedJourneyVersionFrame;
+        if (!td) {
+          throw new Error('Aucun tram n\'est disponible à cette heure-ci.');
+        }
         this.setState({
           hip: Search.formatData(td[0].EstimatedVehicleJourney, selectedStop),
           hop: Search.formatData(td[1].EstimatedVehicleJourney, selectedStop)
