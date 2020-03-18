@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet, Text, ScrollView, Alert
-} from 'react-native';
-import {
-  Row, Button, Icon, Spinner
-} from 'native-base';
+import { StyleSheet, ScrollView, Alert } from 'react-native';
+import { Row, Spinner } from 'native-base';
 
 import Result from './Result';
 import ComeBack from '../components/ComeBack';
 import BreadCrumb from '../components/BreadCrumb';
 import SearchBar from '../components/SearchBar';
+import PressableItem from '../components/PressableItem';
 import api from '../helpers/http';
 import stopPoints from '../data/stopPoints.json';
 import lines from '../data/lines.json';
@@ -51,7 +48,7 @@ export default class Search extends Component {
     };
   }
 
-  getStops(newLine, lineColor) {
+  getStops = (newLine, lineColor) => {
     let stopPointsToDisplay = [];
     switch (newLine) {
         case 'A':
@@ -130,24 +127,21 @@ export default class Search extends Component {
 
     displayLines = () => lines.allLines.map((object) => (
       <Row style={styles.row} key={object.id}>
-        <Button
-          style={styles.button}
-          onPress={() => this.getStops(object.LineRef, object.RouteColor)}
-        >
-          <Icon name='train' style={{ color: object.RouteColor }} />
-          <Text style={styles.textButton}>{`${object.LineRef} - ${object.LineName}`}</Text>
-        </Button>
+        <PressableItem
+          LineRef={object.LineRef}
+          LineName={object.LineName}
+          RouteColor={object.RouteColor}
+          getStops={this.getStops}
+        />
       </Row>
     ))
 
     displayStops = (stopPointsToDisplay) => stopPointsToDisplay.map((stop, index) => (
       <Row style={styles.row} key={index}>
-        <Button
-          style={styles.button}
-          onPress={() => this.getResult(stop)}
-        >
-          <Text style={styles.textButton}>{stop}</Text>
-        </Button>
+        <PressableItem
+          stop={stop}
+          getResult={this.getResult}
+        />
       </Row>
     ))
 
@@ -206,19 +200,5 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginLeft: 'auto',
     paddingBottom: 10
-  },
-  button: {
-    backgroundColor: '#fff',
-    width: '95%',
-    height: 70,
-    marginTop: 15,
-    borderRadius: 15
-  },
-  textButton: {
-    width: '100%',
-    color: '#2c2c2e',
-    paddingLeft: 10,
-    fontSize: 13,
-    fontWeight: 'bold'
   }
 });

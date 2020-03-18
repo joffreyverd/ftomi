@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 import { Container } from 'native-base';
 
 import Search from './Search';
-import Location from './Location';
-import PersonalHeader from '../components/PersonalHeader';
-import PersonalFooter from '../components/PersonalFooter';
+import Geolocation from './Geolocation';
+import Headr from '../components/Headr';
+import Footr from '../components/Footr';
 
-export default class Manual extends Component {
+export default class ManualSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,15 +24,18 @@ export default class Manual extends Component {
     return (
       <>
         <Container style={styles.container}>
-          <PersonalHeader />
+          <Headr />
 
           { manualSearch ? (
             <Search />
           ) : (
-            <Location />
+            <Geolocation />
           )}
 
-          <PersonalFooter manualSearch={manualSearch} switchTabs={this.switchTabs} />
+          <Footr
+            manualSearch={manualSearch}
+            switchTabs={this.switchTabs}
+          />
         </Container>
       </>
     );

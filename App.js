@@ -3,7 +3,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
-import Manual from './app/views/Manual';
+import ManualSearch from './app/views/ManualSearch';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class App extends React.Component {
     }
 
     return (
-      <Manual />
+      <ManualSearch />
     );
   }
 }

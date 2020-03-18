@@ -4,11 +4,11 @@ import { Text } from 'native-base';
 
 import ComeBack from '../components/ComeBack';
 import BreadCrumb from '../components/BreadCrumb';
-import SingleResult from '../components/SingleResult';
+import Item from '../components/Item';
 
 export default class Result extends Component {
     getTramList = (trams, lineColor) => trams.map((object) => (
-      <SingleResult
+      <Item
         key={object.id}
         lineColor={lineColor}
         direction={object.direction}

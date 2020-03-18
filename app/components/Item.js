@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Icon } from 'native-base';
 
-export const SingleResult = (props) => {
+export const Item = (props) => {
   const { lineColor, direction, arrival } = props;
 
   return (
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SingleResult;
+export default Item;

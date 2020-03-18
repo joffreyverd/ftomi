@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Header, Body, Icon } from 'native-base';
 
-export const PersonalHeader = () => (
+export const Headr = () => (
   <Header style={styles.header}>
     <Body>
       <Icon name='train' style={styles.headerTitle} />
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PersonalHeader;
+export default Headr;

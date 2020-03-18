@@ -4,7 +4,7 @@ import {
   Footer, FooterTab, Button, Icon, Text
 } from 'native-base';
 
-export const PersonalFooter = (props) => {
+export const Footr = (props) => {
   const { manualSearch, switchTabs } = props;
   return (
     <>
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default PersonalFooter;
+export default Footr;
