@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
   },
   textButton: {
     width: '100%',
-    color: '#2c2c2e',
+    color: 'rgb(9, 7, 23)',
     paddingLeft: 10,
     fontSize: 13,
-    fontWeight: 'bold'
+    fontFamily: 'Roboto_medium'
   }
 });
 

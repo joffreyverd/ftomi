@@ -23,8 +23,10 @@ export default class Result extends Component {
 
       return (
         <>
-          <BreadCrumb message={`Ligne ${selectedLine} - ${selectedStop}`} />
-          <ScrollView>
+          <BreadCrumb
+            message={`Ligne ${selectedLine} - ${selectedStop}`}
+          />
+          <ScrollView style={styles.scrollView}>
             <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
             {this.getTramList(hip, lineColor)}
             <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
@@ -38,9 +40,13 @@ export default class Result extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    paddingBottom: 50
+  },
   categorieText: {
     marginLeft: 15,
-    marginTop: 15,
-    fontSize: 14
+    marginTop: 10,
+    fontSize: 15,
+    fontFamily: 'Roboto_light'
   }
 });

@@ -14,11 +14,9 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 25,
     height: 80,
-    backgroundColor: 'rgb(105,92,230)'
+    backgroundColor: 'rgb(94,92,230)'
   },
   headerTitle: {
-    width: 25,
-    height: 25,
     marginLeft: 'auto',
     marginRight: 'auto',
     color: '#fff'

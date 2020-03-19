@@ -14,9 +14,10 @@ export const BreadCrumb = (props) => {
 const styles = StyleSheet.create({
   process: {
     padding: 15,
-    fontWeight: 'bold',
+    backgroundColor: '#fff',
+    color: lineColor,
     fontSize: 15,
-    backgroundColor: '#fff'
+    fontFamily: 'Roboto_medium'
   }
 });
 

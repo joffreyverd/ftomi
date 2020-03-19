@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     height: 70,
-    marginTop: 15,
+    marginTop: 10,
+    marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 15,
@@ -42,8 +43,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   textCard: {
-    color: '#2c2c2e',
-    fontSize: 13
+    color: 'rgb(9, 7, 23)',
+    fontSize: 13,
+    fontFamily: 'Roboto_medium'
   },
   cardContent: {
     marginBottom: 'auto',
@@ -61,7 +63,6 @@ const styles = StyleSheet.create({
   timeCard: {
     width: '25%',
     textAlign: 'right',
-    fontWeight: 'bold',
     paddingRight: 10
   },
 });

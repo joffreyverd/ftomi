@@ -9,7 +9,7 @@ export const Footr = (props) => {
   return (
     <>
       <Footer>
-        <FooterTab style={styles.footer}>
+        <FooterTab>
           <Button
             style={styles.button}
             active={manualSearch}
@@ -33,11 +33,8 @@ export const Footr = (props) => {
 };
 
 const styles = StyleSheet.create({
-  footer: {
-    backgroundColor: 'rgb(105,92,230)'
-  },
   button: {
-    backgroundColor: 'rgb(105,92,230)'
+    backgroundColor: 'rgb(94,92,230)'
   }
 });
 

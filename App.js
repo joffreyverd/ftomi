@@ -1,37 +1,36 @@
 import React from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
 
-import ManualSearch from './app/views/ManualSearch';
+import Main from './app/views/Main';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: false,
+      isFontLoaded: false,
     };
   }
 
   async componentDidMount() {
-    // wait to load fonts before to display something
+  // wait to load fonts before to display something
     await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
+      Roboto_medium: require('./app/assets/fonts/Roboto-Medium.ttf'),
+      Roboto_regular: require('./app/assets/fonts/Roboto-Regular.ttf'),
+      Roboto_light: require('./app/assets/fonts/Roboto-Light.ttf')
     });
-    this.setState({ isLoaded: true });
+    this.setState({ isFontLoaded: true });
   }
 
   render() {
-    const { isLoaded } = this.state;
+    const { isFontLoaded } = this.state;
 
-    if (!isLoaded) {
+    if (!isFontLoaded) {
       return <AppLoading />;
     }
 
     return (
-      <ManualSearch />
+      <Main />
     );
   }
 }
