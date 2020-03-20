@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Button, Text } from 'native-base';
+import { StyleSheet, Text } from 'react-native';
+import { Button } from 'native-base';
 
 export const ComeBack = (props) => {
   const { erasePreviousResult } = props;
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     marginRight: 'auto',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    fontFamily: 'Roboto_medium'
   }
 });
 

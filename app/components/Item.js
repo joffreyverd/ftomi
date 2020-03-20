@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, Icon } from 'native-base';
+import { StyleSheet, View, Text } from 'react-native';
+import { Icon } from 'native-base';
 
 export const Item = (props) => {
   const { lineColor, direction, arrival } = props;

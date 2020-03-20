@@ -88,7 +88,7 @@ export default class ManualSearch extends Component {
       api.get(`v1/siri/2.0/estimated-timetable?LineRef=${selectedLine.charAt(0)}`).then((data) => {
         const td = data.ServiceDelivery.EstimatedTimetableDelivery[0].EstimatedJourneyVersionFrame;
         if (!td) {
-          throw new Error('Aucun tram n\'est disponible à cette heure-ci.');
+          throw new Error('Aucun tram ne semble disponible sur cette ligne.');
         }
         this.setState({
           hip: ManualSearch.formatData(td[0].EstimatedVehicleJourney, selectedStop),

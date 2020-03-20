@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
-import { Text } from 'native-base';
+import { StyleSheet, ScrollView, Text } from 'react-native';
 
 import ComeBack from '../components/ComeBack';
 import BreadCrumb from '../components/BreadCrumb';
