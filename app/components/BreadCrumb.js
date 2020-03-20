@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   process: {
     padding: 15,
     backgroundColor: '#fff',
-    color: lineColor,
+    color: 'rgb(9, 7, 23)',
     fontSize: 15,
     fontFamily: 'Roboto_medium'
   }

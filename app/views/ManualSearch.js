@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, Alert } from 'react-native';
 import { Row, Spinner } from 'native-base';
+import * as Animatable from 'react-native-animatable';
 
 import Result from './Result';
 import ComeBack from '../components/ComeBack';
@@ -129,14 +130,20 @@ export default class ManualSearch extends Component {
     }
 
     displayLines = () => lines.allLines.map((object) => (
-      <Row style={styles.row} key={object.id}>
-        <PressableItem
-          LineRef={object.LineRef}
-          LineName={object.LineName}
-          RouteColor={object.RouteColor}
-          getStops={this.getStops}
-        />
-      </Row>
+      <Animatable.View
+        key={object.id}
+        animation='bounceInDown'
+        duration={1000}
+      >
+        <Row style={styles.row}>
+          <PressableItem
+            LineRef={object.LineRef}
+            LineName={object.LineName}
+            RouteColor={object.RouteColor}
+            getStops={this.getStops}
+          />
+        </Row>
+      </Animatable.View>
     ))
 
     displayStops = (stopPointsToDisplay) => stopPointsToDisplay.map((stop, i) => (
