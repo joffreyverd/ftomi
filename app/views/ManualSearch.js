@@ -15,10 +15,10 @@ export default class ManualSearch extends Component {
   static formatData(tramFirstDirection, selectedStop) {
     const trams = [];
     const now = new Date();
-    now.setHours(now.getHours() + 1);
     for (let i = 0; i < Object.keys(tramFirstDirection).length; i += 1) {
       for (let n = 0; n < Object.keys(tramFirstDirection[i].EstimatedCalls).length; n += 1) {
         const arrival = new Date(tramFirstDirection[i].EstimatedCalls[n].ExpectedArrivalTime);
+        arrival.setHours(arrival.getHours() + 1);
         if (tramFirstDirection[i].EstimatedCalls[n].StopPointName === selectedStop
            && arrival > now) {
           trams.push({
