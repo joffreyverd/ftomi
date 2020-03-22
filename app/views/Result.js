@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, Text } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import ComeBack from '../components/ComeBack';
 import BreadCrumb from '../components/BreadCrumb';
@@ -26,10 +27,15 @@ export default class Result extends Component {
             message={`Ligne ${selectedLine} - ${selectedStop}`}
           />
           <ScrollView style={styles.scrollView}>
-            <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
-            {this.getTramList(hip, lineColor)}
-            <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
-            {this.getTramList(hop, lineColor)}
+            <Animatable.View
+              animation='bounceInDown'
+              duration={1000}
+            >
+              <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
+              {this.getTramList(hip, lineColor)}
+              <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
+              {this.getTramList(hop, lineColor)}
+            </Animatable.View>
           </ScrollView>
 
           <ComeBack erasePreviousResult={erasePreviousResult} />

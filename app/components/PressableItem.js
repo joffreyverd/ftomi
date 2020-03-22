@@ -1,58 +1,87 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Button, Icon } from 'native-base';
+import * as Animatable from 'react-native-animatable';
 
-export const PressableItem = (props) => {
-  const {
-    getStops, getResult, stop, LineRef, LineName, RouteColor
-  } = props;
+export default class PressableItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pulse: false
+    };
+  }
 
-  return (
-    <>
-      {!stop ? (
+  runAnimation() {
+    const { pulse } = this.state;
+    this.setState({ pulse: !pulse });
+  }
 
-        <Button
-          style={styles.button}
-          onPress={() => getStops(LineRef, RouteColor)}
-        >
-          <Icon
-            name='train'
-            style={{ color: RouteColor }}
-          />
-          <Text style={styles.textButton}>
-            {`${LineRef} - ${LineName}`}
-          </Text>
-        </Button>
+  render() {
+    const { pulse } = this.state;
+    const {
+      getStops, getResult, stop, LineRef, LineName, RouteColor
+    } = this.props;
 
-      ) : (
+    return (
+      <>
+        {!stop ? (
+          <Animatable.View
+            style={styles.buttonView}
+            animation={pulse ? 'pulse' : ''}
+            onAnimationEnd={() => getStops(LineRef, RouteColor)}
+            duration={200}
+          >
+            <Button
+              style={styles.button}
+              onPress={() => this.runAnimation()}
+            >
+              <Icon
+                name='train'
+                style={{ color: RouteColor }}
+              />
+              <Text style={styles.text}>{`${LineRef} - ${LineName}`}</Text>
+            </Button>
+          </Animatable.View>
 
-        <Button
-          style={styles.button}
-          onPress={() => getResult(stop)}
-        >
-          <Text style={styles.textButton}>{stop}</Text>
-        </Button>
-
-      )}
-    </>
-  );
-};
+        ) : (
+          <Animatable.View
+            style={styles.buttonView}
+            animation={pulse ? 'pulse' : ''}
+            onAnimationEnd={() => getResult(stop)}
+            duration={200}
+          >
+            <Button
+              style={styles.button}
+              onPress={() => this.runAnimation()}
+            >
+              <Text style={styles.text}>{stop}</Text>
+            </Button>
+          </Animatable.View>
+        )}
+      </>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
+  buttonView: {
+    width: '100%',
+    paddingBottom: 10
+  },
   button: {
     backgroundColor: '#fff',
     width: '95%',
+    marginRight: 'auto',
+    marginLeft: 'auto',
     height: 70,
     marginTop: 15,
     borderRadius: 15
   },
-  textButton: {
+  text: {
     width: '100%',
     color: 'rgb(9, 7, 23)',
-    paddingLeft: 10,
     fontSize: 13,
+    paddingLeft: 10,
     fontFamily: 'Roboto_medium'
   }
 });
-
-export default PressableItem;

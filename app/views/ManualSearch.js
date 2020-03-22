@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Alert } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { Row, Spinner } from 'native-base';
-import * as Animatable from 'react-native-animatable';
 
 import Result from './Result';
 import ComeBack from '../components/ComeBack';
@@ -130,25 +129,19 @@ export default class ManualSearch extends Component {
     }
 
     displayLines = () => lines.allLines.map((object) => (
-      <Animatable.View
-        key={object.id}
-        animation='bounceInDown'
-        duration={1000}
-      >
-        <Row style={styles.row}>
-          <PressableItem
-            LineRef={object.LineRef}
-            LineName={object.LineName}
-            RouteColor={object.RouteColor}
-            getStops={this.getStops}
-          />
-        </Row>
-      </Animatable.View>
+      <Row key={object.id}>
+        <PressableItem
+          LineRef={object.LineRef}
+          LineName={object.LineName}
+          RouteColor={object.RouteColor}
+          getStops={this.getStops}
+        />
+      </Row>
     ))
 
     displayStops = (stopPointsToDisplay) => stopPointsToDisplay.map((stop, i) => (
       // String(i) is used to avoid eslint warning `Do not use Array index in keys`
-      <Row style={styles.row} key={String(i)}>
+      <Row key={String(i)}>
         <PressableItem
           stop={stop}
           getResult={this.getResult}
@@ -207,11 +200,3 @@ export default class ManualSearch extends Component {
       );
     }
 }
-
-const styles = StyleSheet.create({
-  row: {
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    paddingBottom: 10
-  }
-});
