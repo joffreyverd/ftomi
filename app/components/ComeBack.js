@@ -18,12 +18,12 @@ export default class ComeBack extends Component {
 
   render() {
     const { pulse } = this.state;
-    const { erasePreviousResult } = this.props;
+    const { eraseResult } = this.props;
 
     return (
       <Animatable.View
         animation={pulse ? 'pulse' : ''}
-        onAnimationEnd={erasePreviousResult}
+        onAnimationEnd={eraseResult}
         duration={200}
       >
         <Button

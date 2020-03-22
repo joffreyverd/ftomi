@@ -48,12 +48,13 @@ export default class ManualSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchedStops: [],
       hip: [],
       hop: []
     };
   }
 
-  getStops = (newLine, lineColor) => {
+  getStops = (newLine, selectedLineColor) => {
     let stopPointsToDisplay = [];
     switch (newLine) {
         case 'A':
@@ -77,10 +78,18 @@ export default class ManualSearch extends Component {
         default:
           break;
     }
+    let lineDirections = '';
+    for (let i = 0; i < Object.keys(lines.allLines).length; i += 1) {
+      if (newLine === lines.allLines[i].LineRef) {
+        lineDirections = lines.allLines[i].LineName;
+      }
+    }
     this.setState({
       selectedLine: newLine,
-      lineColor,
-      stopPointsToDisplay
+      lineDirections,
+      selectedLineColor,
+      stopPointsToDisplay,
+      searchedStops: []
     });
   }
 
@@ -92,45 +101,43 @@ export default class ManualSearch extends Component {
       api.get(`v1/siri/2.0/estimated-timetable?LineRef=${selectedLine.charAt(0)}`).then((data) => {
         const td = data.ServiceDelivery.EstimatedTimetableDelivery[0].EstimatedJourneyVersionFrame;
         if (!td) {
-          throw new Error('Aucun tram ne semble disponible sur cette ligne.');
+          throw new Error('Aucun tram n\'est disponible.');
         }
-
         this.setState({
           hip: ManualSearch.formatData(td[0].EstimatedVehicleJourney, selectedStop),
           hop: ManualSearch.formatData(td[1].EstimatedVehicleJourney, selectedStop)
         });
       }).catch((e) => {
-        this.erasePreviousResult();
+        this.eraseResult();
         Alert.alert(e.message);
       });
     }
 
-    erasePreviousResult = () => {
+    eraseResult = () => {
       this.setState({
         selectedLine: null,
         selectedStop: null,
+        lineDirections: '',
+        searchedStops: [],
         hip: [],
         hop: []
       });
     }
 
-    searchStopPoint = (newValue) => {
-      const { stopPointsToDisplay, selectedLine, lineColor } = this.state;
-      const searchedStops = [];
-
+    typoSearch = (newValue) => {
+      const { stopPointsToDisplay, selectedLine, selectedLineColor } = this.state;
       if (!newValue) {
-        this.getStops(selectedLine, lineColor);
+        this.getStops(selectedLine, selectedLineColor);
         return;
       }
-
+      const searchedStops = [];
       for (let i = 0; i < Object.keys(stopPointsToDisplay).length; i += 1) {
         if (stopPointsToDisplay[i].toLowerCase().includes(newValue.toLowerCase())) {
           searchedStops.push(stopPointsToDisplay[i]);
         }
       }
-
       this.setState({
-        stopPointsToDisplay: searchedStops,
+        searchedStops,
       });
     }
 
@@ -157,7 +164,8 @@ export default class ManualSearch extends Component {
 
     render() {
       const {
-        selectedLine, stopPointsToDisplay, selectedStop, hip, hop, lineColor
+        selectedLine, stopPointsToDisplay, searchedStops,
+        selectedStop, hip, hop, selectedLineColor, lineDirections
       } = this.state;
 
       return (
@@ -176,12 +184,17 @@ export default class ManualSearch extends Component {
                 message={`Ligne ${selectedLine}`}
               />
               <SearchBar
-                searchStopPoint={this.searchStopPoint}
+                typoSearch={this.typoSearch}
               />
               <ScrollView>
-                {this.displayStops(stopPointsToDisplay)}
+                {searchedStops.length > 0 ? (
+                  this.displayStops(searchedStops)
+                ) : (
+                  this.displayStops(stopPointsToDisplay)
+                )}
+
               </ScrollView>
-              <ComeBack erasePreviousResult={this.erasePreviousResult} />
+              <ComeBack eraseResult={this.eraseResult} />
             </>
           )}
 
@@ -196,10 +209,11 @@ export default class ManualSearch extends Component {
             <Result
               hip={hip}
               hop={hop}
-              lineColor={lineColor}
+              selectedLineColor={selectedLineColor}
+              lineDirections={lineDirections}
               selectedLine={selectedLine}
               selectedStop={selectedStop}
-              erasePreviousResult={this.erasePreviousResult}
+              eraseResult={this.eraseResult}
             />
           )}
         </>

@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 import { Item, Icon, Input } from 'native-base';
 
 export const SearchBar = (props) => {
-  const { searchStopPoint } = props;
+  const { typoSearch } = props;
   return (
     <Item style={styles.searchBar}>
       <Icon name='search' style={styles.searchIcon} />
       <Input
         placeholder='Arrêt'
-        onChangeText={(newValue) => searchStopPoint(newValue)}
+        onChangeText={(newValue) => typoSearch(newValue)}
       />
     </Item>
   );

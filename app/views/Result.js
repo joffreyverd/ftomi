@@ -7,10 +7,10 @@ import BreadCrumb from '../components/BreadCrumb';
 import Item from '../components/Item';
 
 export default class Result extends Component {
-    getTramList = (trams, lineColor) => trams.map((object) => (
+    getTramList = (trams, selectedLineColor) => trams.map((object) => (
       <Item
         key={object.id}
-        lineColor={lineColor}
+        selectedLineColor={selectedLineColor}
         direction={object.direction}
         arrival={object.arrival}
       />
@@ -18,8 +18,9 @@ export default class Result extends Component {
 
     render() {
       const {
-        hip, hop, lineColor, erasePreviousResult, selectedLine, selectedStop
+        hip, hop, selectedLineColor, eraseResult, selectedLine, selectedStop, lineDirections
       } = this.props;
+      const directions = lineDirections.split('- ');
 
       return (
         <>
@@ -34,20 +35,20 @@ export default class Result extends Component {
             >
               {hip.length > 0 && (
                 <>
-                  <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
-                  {this.getTramList(hip, lineColor)}
+                  <Text style={styles.categorieText}>{`Direction ${directions[1]}`}</Text>
+                  {this.getTramList(hip, selectedLineColor)}
                 </>
               )}
               {hop.length > 0 && (
                 <>
-                  <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
-                  {this.getTramList(hop, lineColor)}
+                  <Text style={styles.categorieText}>{`Direction ${directions[0]}`}</Text>
+                  {this.getTramList(hop, selectedLineColor)}
                 </>
               )}
             </Animatable.View>
           </ScrollView>
 
-          <ComeBack erasePreviousResult={erasePreviousResult} />
+          <ComeBack eraseResult={eraseResult} />
         </>
       );
     }

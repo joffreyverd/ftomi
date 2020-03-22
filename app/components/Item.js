@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'native-base';
 
 export const Item = (props) => {
-  const { lineColor, direction, arrival } = props;
+  const { selectedLineColor, direction, arrival } = props;
 
   return (
     <>
@@ -11,7 +11,7 @@ export const Item = (props) => {
         <Icon
           active
           name='train'
-          style={[{ color: lineColor }, styles.cardContent, styles.iconCard]}
+          style={[{ color: selectedLineColor }, styles.cardContent, styles.iconCard]}
         />
         <Text
           uppercase={false}
