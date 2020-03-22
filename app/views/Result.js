@@ -26,15 +26,24 @@ export default class Result extends Component {
           <BreadCrumb
             message={`Ligne ${selectedLine} - ${selectedStop}`}
           />
+
           <ScrollView style={styles.scrollView}>
             <Animatable.View
               animation='bounceInDown'
               duration={1000}
             >
-              <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
-              {this.getTramList(hip, lineColor)}
-              <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
-              {this.getTramList(hop, lineColor)}
+              {hip.length > 0 && (
+                <>
+                  <Text style={styles.categorieText}>{`Direction ${hip[0].direction}`}</Text>
+                  {this.getTramList(hip, lineColor)}
+                </>
+              )}
+              {hop.length > 0 && (
+                <>
+                  <Text style={styles.categorieText}>{`Direction ${hop[0].direction}`}</Text>
+                  {this.getTramList(hop, lineColor)}
+                </>
+              )}
             </Animatable.View>
           </ScrollView>
 

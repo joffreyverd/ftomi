@@ -15,6 +15,11 @@ export default class ManualSearch extends Component {
   static formatData(allTrams, selectedStop) {
     const trams = [];
     const now = new Date();
+
+    if (allTrams[0].EstimatedCalls[0].DestinationName === selectedStop) {
+      return trams;
+    }
+
     for (let i = 0; i < Object.keys(allTrams).length; i += 1) {
       for (let n = 0; n < Object.keys(allTrams[i].EstimatedCalls).length; n += 1) {
         const arrival = new Date(allTrams[i].EstimatedCalls[n].ExpectedArrivalTime);
@@ -187,7 +192,7 @@ export default class ManualSearch extends Component {
             </ScrollView>
           )}
 
-          {selectedStop && hip.length > 0 && hop.length > 0 && (
+          {selectedStop && (hip.length > 0 || hop.length > 0) && (
             <Result
               hip={hip}
               hop={hop}
