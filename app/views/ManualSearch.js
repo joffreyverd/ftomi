@@ -12,19 +12,19 @@ import stopPoints from '../data/stopPoints.json';
 import lines from '../data/lines.json';
 
 export default class ManualSearch extends Component {
-  static formatData(tramFirstDirection, selectedStop) {
+  static formatData(allTrams, selectedStop) {
     const trams = [];
     const now = new Date();
-    for (let i = 0; i < Object.keys(tramFirstDirection).length; i += 1) {
-      for (let n = 0; n < Object.keys(tramFirstDirection[i].EstimatedCalls).length; n += 1) {
-        const arrival = new Date(tramFirstDirection[i].EstimatedCalls[n].ExpectedArrivalTime);
+    for (let i = 0; i < Object.keys(allTrams).length; i += 1) {
+      for (let n = 0; n < Object.keys(allTrams[i].EstimatedCalls).length; n += 1) {
+        const arrival = new Date(allTrams[i].EstimatedCalls[n].ExpectedArrivalTime);
         arrival.setHours(arrival.getHours() + 1);
-        if (tramFirstDirection[i].EstimatedCalls[n].StopPointName === selectedStop
+        if (allTrams[i].EstimatedCalls[n].StopPointName === selectedStop
            && arrival > now) {
           trams.push({
             id: `${i}-${n}`,
             arrival,
-            direction: tramFirstDirection[i].EstimatedCalls[n].DestinationName
+            direction: allTrams[i].EstimatedCalls[n].DestinationName
           });
         }
         if (trams.length === 5) {
@@ -33,10 +33,10 @@ export default class ManualSearch extends Component {
         }
       }
     }
-    trams.sort((a, b) => a.arrival - b.arrival);
     if (trams.length === 0) {
       throw new Error('Aucun tram ne correspond à votre recherche.');
     }
+    trams.sort((a, b) => a.arrival - b.arrival);
     return trams;
   }
 
@@ -89,6 +89,7 @@ export default class ManualSearch extends Component {
         if (!td) {
           throw new Error('Aucun tram ne semble disponible sur cette ligne.');
         }
+
         this.setState({
           hip: ManualSearch.formatData(td[0].EstimatedVehicleJourney, selectedStop),
           hop: ManualSearch.formatData(td[1].EstimatedVehicleJourney, selectedStop)
