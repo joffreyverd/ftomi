@@ -3,7 +3,7 @@ ftomi
 
 Mobile application written in React-native which is connected to the CTS api to provide in real-time tramway informations.
 
-![Image](./app/assets/stork.png "stork")
+![Image](./app/assets/tramway.png "tramway")
 
 
 ## Directory structure

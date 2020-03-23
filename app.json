@@ -9,13 +9,13 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./app/assets/stork.png",
+    "icon": "./app/assets/tramway.png",
     "splash": {
-      "image": "./app/assets/stork.png",
+      "image": "./app/assets/tramway.png",
       "resizeMode": "contain",
-      "backgroundColor": "#2c2c2e"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
