@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Header, Body, Icon } from 'native-base';
+import { StyleSheet, Image } from 'react-native';
+import { Header, Body } from 'native-base';
 
 export const Headr = () => (
   <Header style={styles.header}>
     <Body>
-      <Icon name='train' style={styles.headerTitle} />
+      <Image style={styles.headerTitle} source={require('../assets/tramway-header.png')} />
     </Body>
   </Header>
 );
@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    color: '#fff'
+    width: 35,
+    height: 35
   }
 });
 

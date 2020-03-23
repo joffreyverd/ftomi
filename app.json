@@ -15,7 +15,7 @@
     "splash": {
       "image": "./app/assets/tramway.png",
       "resizeMode": "contain",
-      "backgroundColor": "#2c2c2e"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
