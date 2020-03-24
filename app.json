@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.2",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./app/assets/tramway.png",
     "splash": {
@@ -25,7 +25,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.gs.ftomi",
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.4",
       "supportsTablet": true
     },
     "android": {
