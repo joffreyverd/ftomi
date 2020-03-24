@@ -16,11 +16,14 @@ export default class Main extends Component {
   }
 
   switchTabs = (result) => {
-    this.setState({ manualSearch: result });
+    this.setState({
+      manualSearch: result
+    });
   }
 
   render() {
     const { manualSearch } = this.state;
+
     return (
       <>
         <Container style={styles.container}>

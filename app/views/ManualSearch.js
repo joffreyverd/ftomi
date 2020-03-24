@@ -3,6 +3,7 @@ import { ScrollView, Alert } from 'react-native';
 import { Row, Spinner } from 'native-base';
 
 import Result from './Result';
+import NoResult from './NoResult';
 import ComeBack from '../components/ComeBack';
 import BreadCrumb from '../components/BreadCrumb';
 import SearchBar from '../components/SearchBar';
@@ -107,9 +108,10 @@ export default class ManualSearch extends Component {
           hip: ManualSearch.formatData(td[0].EstimatedVehicleJourney, selectedStop),
           hop: ManualSearch.formatData(td[1].EstimatedVehicleJourney, selectedStop)
         });
-      }).catch((e) => {
-        this.eraseResult();
-        Alert.alert(e.message);
+      }).catch(() => {
+        this.setState({
+          noResult: true
+        });
       });
     }
 
@@ -119,6 +121,8 @@ export default class ManualSearch extends Component {
         selectedStop: null,
         lineDirections: '',
         searchedStops: [],
+        typoSearchStopPoints: false,
+        noResult: false,
         hip: [],
         hop: []
       });
@@ -138,6 +142,7 @@ export default class ManualSearch extends Component {
       }
       this.setState({
         searchedStops,
+        typoSearchStopPoints: !(searchedStops.length > 0)
       });
     }
 
@@ -164,8 +169,8 @@ export default class ManualSearch extends Component {
 
     render() {
       const {
-        selectedLine, stopPointsToDisplay, searchedStops,
-        selectedStop, hip, hop, selectedLineColor, lineDirections
+        selectedLine, stopPointsToDisplay, searchedStops, typoSearchStopPoints,
+        selectedStop, hip, hop, selectedLineColor, lineDirections, noResult
       } = this.state;
 
       return (
@@ -187,7 +192,7 @@ export default class ManualSearch extends Component {
                 typoSearch={this.typoSearch}
               />
               <ScrollView>
-                {searchedStops.length > 0 ? (
+                {searchedStops.length > 0 || typoSearchStopPoints ? (
                   this.displayStops(searchedStops)
                 ) : (
                   this.displayStops(stopPointsToDisplay)
@@ -198,7 +203,7 @@ export default class ManualSearch extends Component {
             </>
           )}
 
-          {selectedLine && selectedStop && hip.length === 0 && hop.length === 0 && (
+          {selectedLine && selectedStop && hip.length === 0 && hop.length === 0 && !noResult && (
             <ScrollView>
               <BreadCrumb message={`Ligne ${selectedLine} - ${selectedStop}`} />
               <Spinner color='rgb(105,92,230)' />
@@ -211,6 +216,14 @@ export default class ManualSearch extends Component {
               hop={hop}
               selectedLineColor={selectedLineColor}
               lineDirections={lineDirections}
+              selectedLine={selectedLine}
+              selectedStop={selectedStop}
+              eraseResult={this.eraseResult}
+            />
+          )}
+
+          {noResult && (
+            <NoResult
               selectedLine={selectedLine}
               selectedStop={selectedStop}
               eraseResult={this.eraseResult}
