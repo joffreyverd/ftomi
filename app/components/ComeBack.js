@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginTop: 'auto',
     marginBottom: 'auto',
-    fontFamily: 'Roboto_medium'
+    fontFamily: 'RobotoMedium'
   }
 });

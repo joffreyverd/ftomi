@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   textCard: {
     color: 'rgb(9, 7, 23)',
     fontSize: 13,
-    fontFamily: 'Roboto_medium'
+    fontFamily: 'RobotoMedium'
   },
   cardContent: {
     marginBottom: 'auto',

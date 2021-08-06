@@ -7,51 +7,51 @@ import BreadCrumb from '../components/BreadCrumb';
 import Item from '../components/Item';
 
 export default class Result extends Component {
-    getTramList = (trams, selectedLineColor) => trams.map((object) => (
-      <Item
-        key={object.id}
-        selectedLineColor={selectedLineColor}
-        direction={object.direction}
-        arrival={object.arrival}
-      />
-    ))
+  getTramList = (trams, selectedLineColor) => trams.map((object) => (
+    <Item
+      key={object.id}
+      selectedLineColor={selectedLineColor}
+      direction={object.direction}
+      arrival={object.arrival}
+    />
+  ))
 
-    render() {
-      const {
-        hip, hop, selectedLineColor, eraseResult, selectedLine, selectedStop, lineDirections
-      } = this.props;
-      const directions = lineDirections.split('- ');
+  render() {
+    const {
+      hip, hop, selectedLineColor, eraseResult, selectedLine, selectedStop, lineDirections
+    } = this.props;
+    const directions = lineDirections.split('- ');
 
-      return (
-        <>
-          <BreadCrumb
-            message={`Ligne ${selectedLine} - ${selectedStop}`}
-          />
+    return (
+      <>
+        <BreadCrumb
+          message={`Ligne ${selectedLine} - ${selectedStop}`}
+        />
 
-          <ScrollView style={styles.scrollView}>
-            <Animatable.View
-              animation='bounceInDown'
-              duration={1000}
-            >
-              {hip.length > 0 && (
-                <>
-                  <Text style={styles.categorieText}>{`Direction ${directions[1]}`}</Text>
-                  {this.getTramList(hip, selectedLineColor)}
-                </>
-              )}
-              {hop.length > 0 && (
-                <>
-                  <Text style={styles.categorieText}>{`Direction ${directions[0]}`}</Text>
-                  {this.getTramList(hop, selectedLineColor)}
-                </>
-              )}
-            </Animatable.View>
-          </ScrollView>
+        <ScrollView style={styles.scrollView}>
+          <Animatable.View
+            animation='bounceInDown'
+            duration={1000}
+          >
+            {hip.length > 0 && (
+              <>
+                <Text style={styles.categorieText}>{`Direction ${directions[1]}`}</Text>
+                {this.getTramList(hip, selectedLineColor)}
+              </>
+            )}
+            {hop.length > 0 && (
+              <>
+                <Text style={styles.categorieText}>{`Direction ${directions[0]}`}</Text>
+                {this.getTramList(hop, selectedLineColor)}
+              </>
+            )}
+          </Animatable.View>
+        </ScrollView>
 
-          <ComeBack eraseResult={eraseResult} />
-        </>
-      );
-    }
+        <ComeBack eraseResult={eraseResult} />
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginTop: 10,
     fontSize: 15,
-    fontFamily: 'Roboto_light'
+    fontFamily: 'RobotoLight'
   }
 });

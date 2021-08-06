@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     color: 'rgb(9, 7, 23)',
     fontSize: 20,
-    fontFamily: 'Roboto_light'
+    fontFamily: 'RobotoLight'
   }
 });
 

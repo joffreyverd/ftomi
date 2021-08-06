@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     color: 'rgb(9, 7, 23)',
     fontSize: 13,
     paddingLeft: 10,
-    fontFamily: 'Roboto_medium'
+    fontFamily: 'RobotoMedium'
   }
 });

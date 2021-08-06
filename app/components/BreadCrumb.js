@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: 'rgb(9, 7, 23)',
     fontSize: 15,
-    fontFamily: 'Roboto_medium'
+    fontFamily: 'RobotoMedium'
   }
 });
 
